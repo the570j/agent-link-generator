@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Agent Link Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🧾 Agent Link Generator</h1>
+
+    <input type="text" id="productId" placeholder="Enter Product ID">
+
+    <label for="platform">Platform:</label>
+    <select id="platform">
+      <option value="WEIDIAN">Weidian</option>
+      <option value="TAOBAO">Taobao</option>
+    </select>
+
+    <label for="agent">Agent:</label>
+    <select id="agent">
+      <option value="cnfans">CNFans</option>
+      <option value="acbuy">ACBuy</option>
+      <option value="mulebuy">Mulebuy</option>
+    </select>
+
+    <button onclick="generateLink()">Generate Link</button>
+
+    <p id="result"></p>
+
+    <div class="signup-buttons">
+      <a class="signup-button" href="https://cnfans.com/register?ref=4575979" target="_blank">
+        🛍️ Sign Up on CNFans for Free Coupons
+      </a>
+      <a class="signup-button" href="https://www.acbuy.com/login?loginStatus=register&code=2JX56Q" target="_blank">
+        🎁 Register on ACBuy for Free Coupons
+      </a>
+      <a class="signup-button" href="https://mulebuy.com/register?ref=200502300" target="_blank">
+        ✨ Join Mulebuy for Free Coupons
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function generateLink() {
+      const id = document.getElementById("productId").value.trim();
+      const platform = document.getElementById("platform").value;
+      const agent = document.getElementById("agent").value;
+
+      if (!id) {
+        document.getElementById("result").innerText = "❌ Please enter a product ID.";
+        return;
+      }
+
+      let url = "";
+
+      if (agent === "cnfans") {
+        url = `https://cnfans.com/product?id=${id}&platform=${platform}&ref=4575979`;
+      } else if (agent === "acbuy") {
+        const source = platform === "WEIDIAN" ? "WD" : "TB";
+        url = `https://www.acbuy.com/product?id=${id}&source=${source}&from=search`;
+      } else if (agent === "mulebuy") {
+        const shopType = platform.toLowerCase();
+        url = `https://mulebuy.com/product/?id=${id}&shop_type=${shopType}&ref=200502300`;
+      }
+
+      document.getElementById("result").innerHTML =
+        `✅ Generated Link:<br><a href="${url}" target="_blank">${url}</a>`;
+    }
+  </script>
+</body>
+</html>
